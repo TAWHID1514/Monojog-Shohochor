@@ -27,7 +27,7 @@ client = Groq(api_key=GROQ_API_KEY)
 conversation_history = []
 BD_TZ = pytz.timezone("Asia/Dhaka")
 
-# ── ALARM STATE ────────────────────────────────────────────────────────────────
+# ALARM STATE
 alarm_waiting = False
 alarm_lock = threading.Lock()
 
@@ -40,7 +40,7 @@ def is_alarm_waiting() -> bool:
     with alarm_lock:
         return alarm_waiting
 
-# ── Google Classroom ───────────────────────────────────────────────────────────
+# Google Classroom
 SCOPES = [
     "https://www.googleapis.com/auth/classroom.courses.readonly",
     "https://www.googleapis.com/auth/classroom.coursework.me.readonly",
@@ -185,7 +185,7 @@ def start_classroom_scheduler():
     threading.Timer(10, check_and_notify_assignments).start()
     schedule.every(1).hours.do(check_and_notify_assignments)
 
-# ── SYSTEM PROMPT ──────────────────────────────────────────────────────────────
+# SYSTEM PROMPT
 SYSTEM_PROMPT = """
 You are "Monojog Shohochor" (মনোযোগ সহচর), a friendly AI assistant robot for university students in Bangladesh.
 
@@ -213,7 +213,7 @@ IMPORTANT RULES:
 - Never repeat yourself
 """
 
-# ── TTS ────────────────────────────────────────────────────────────────────────
+# TTS 
 def speak(text: str):
     if not text or not text.strip():
         return
@@ -228,7 +228,7 @@ def speak(text: str):
     except Exception as e:
         print(f"[TTS Error] {e}")
 
-# ── STT ────────────────────────────────────────────────────────────────────────
+# STT 
 SAMPLE_RATE = 16000
 RECORD_SECONDS = 7
 
@@ -264,7 +264,7 @@ def listen(duration: int = RECORD_SECONDS) -> str:
         print(f"[STT Error] {e}")
         return ""
 
-# ── GROQ AI ────────────────────────────────────────────────────────────────────
+# GROQ AI 
 def get_ai_response(user_input: str) -> str:
     conversation_history.append({"role": "user", "content": user_input})
     try:
@@ -281,7 +281,7 @@ def get_ai_response(user_input: str) -> str:
         print(f"[Groq Error] {e}")
         return "Oops! Something went wrong."
 
-# ── ALARM ──────────────────────────────────────────────────────────────────────
+# ALARM
 def beep_and_speak(label: str):
     """Ring alarm ONCE then ask if more help needed."""
     print(f"\n🔔 [ALARM] {label}")
@@ -368,7 +368,7 @@ def parse_tokens(original_reply: str):
 
     return clean, fetch
 
-# ── NIGHT CHECK-IN ─────────────────────────────────────────────────────────────
+# NIGHT CHECK-IN 
 def night_checkin():
     msg = "তোমার আজকের দিন কেমন গেলো? আমাকে বলতে পারো!"
     print(f"\n[Night Check-in] {msg}")
@@ -390,7 +390,7 @@ def start_daily_scheduler():
             time.sleep(30)
     threading.Thread(target=_run, daemon=True).start()
 
-# ── MAIN ───────────────────────────────────────────────────────────────────────
+# MAIN 
 def main():
     print("=" * 55)
     print("   Monojog Shohochor - Student AI Assistant Robot")
