@@ -137,7 +137,7 @@ def get_assignments() -> list:
     except Exception as e:
         print(f"[Classroom Error] {e}")
         return []
-
+# Update for google classroom token and assignment fetching
 def speak_assignments(assignments: list):
     """Speak assignment summary clearly."""
     if not assignments:
